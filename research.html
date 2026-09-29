@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research | S Anukriti</title>
+<meta name="description" content="S Anukriti is a Senior Economist in the Development Research Group at the World Bank. She studies why gender gaps persist in developing countries and which policies can close them.">
+<meta property="og:title" content="Research | S Anukriti">
+<meta property="og:description" content="S Anukriti is a Senior Economist in the Development Research Group at the World Bank. She studies why gender gaps persist in developing countries and which policies can close them.">
+<meta property="og:image" content="img/portrait.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap">
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;background:#F5F6F8;color:#161B2E}
+a{color:#2C3E8C}a:hover{color:#1B2766}
+a:focus-visible,button:focus-visible{outline:2px solid #B7791F;outline-offset:3px}
+img{max-width:100%}
+.hero a,.hero button{white-space:nowrap}
+@media (max-width: 900px){
+  .site-header{height:auto!important;min-height:64px;padding-top:10px!important;padding-bottom:10px!important;flex-wrap:wrap;gap:4px 16px}
+  .site-header nav{flex-wrap:wrap;gap:0!important}
+  .site-header nav a{padding:10px 10px!important}
+  main{gap:56px!important;padding-top:40px!important}
+  h1{font-size:44px!important}
+  [style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr)!important}
+  .hero{gap:28px!important}
+  .hero > div:last-child{order:-1}
+  .portrait{width:100%!important;max-width:320px;height:auto!important;aspect-ratio:4/5}
+  main img{height:auto!important;max-width:100%}
+  .strips > div{flex-wrap:wrap;gap:6px 24px!important}
+  .intro-row{flex-wrap:wrap}
+  .hero > div > div:last-child{flex-wrap:wrap}
+  [role="group"]{column-gap:18px!important}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="tpl">
+
+<div style="width: 100%; min-height: 100vh; box-sizing: border-box; background: #F5F6F8; color: #161B2E; font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif; display: flex; flex-direction: column">
+
+<header class="site-header" style="height: 88px; flex-shrink: 0; box-sizing: border-box; padding: 0 max(24px, calc((100% - 960px) / 2)); display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border-bottom: 1px solid #D5D9E2">
+<a href="index.html" style="font-family: Spectral, Georgia, serif; font-size: 24px; font-weight: 600; color: #161B2E; text-decoration: none">S Anukriti</a>
+<nav aria-label="Main" style="display: flex; gap: 4px">
+<a href="index.html" style="padding: 12px 16px; font-size: 16px; color: #3B4256; text-decoration: none; border-bottom: 2px solid transparent">Home</a>
+<a href="research.html" aria-current="page" style="padding: 12px 16px; font-size: 16px; font-weight: 600; color: #2C3E8C; text-decoration: none; border-bottom: 2px solid #2C3E8C">Research</a>
+<a href="writing.html" style="padding: 12px 16px; font-size: 16px; color: #3B4256; text-decoration: none; border-bottom: 2px solid transparent">Writing and media</a>
+<a href="cv.pdf" style="padding: 12px 16px; font-size: 16px; color: #3B4256; text-decoration: none; border-bottom: 2px solid transparent">CV</a>
+</nav>
+</header>
+
+<main style="flex-grow: 1; box-sizing: border-box; padding: 72px max(24px, calc((100% - 960px) / 2)) 80px; display: flex; flex-direction: column; gap: 48px">
+
+<div style="display: flex; flex-direction: column; gap: 16px; max-width: 700px; margin-bottom: -20px">
+<h1 style="margin: 0; font-family: Spectral, Georgia, serif; font-size: 52px; line-height: 1.05; font-weight: 500">Research</h1>
+<div aria-hidden="true" style="height: 3px; width: 56px; background: #B7791F"></div>
+
+</div>
+
+
+<div role="group" aria-label="Filter by theme" style="display: flex; flex-wrap: wrap; column-gap: 28px; row-gap: 0; margin-bottom: -16px; border-bottom: 1px solid #D5D9E2">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}}</button>
+</sc-for>
+</div>
+
+
+
+<sc-if value="{{notAll}}" hint-placeholder-val="{{ false }}">
+<div aria-live="polite" style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-family: Spectral, Georgia, serif; font-size: 42px; line-height: 1.1; font-weight: 500">{{current.label}}</h2>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 48px">
+<sc-if value="{{hasWps}}" hint-placeholder-val="{{ true }}">
+<section style="{{secStyle}}">
+<div style="display: flex; flex-direction: column; min-width: 0">
+<h2 style="margin: 0 0 8px; font-family: Spectral, Georgia, serif; font-size: 30px; font-weight: 500">Working papers</h2>
+<sc-for list="{{wps}}" as="p" hint-placeholder-count="3">
+<article style="display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 28px; padding: 22px 0; border-top: 1px solid #D5D9E2">
+<span style="font-family: Spectral, Georgia, serif; font-size: 20px; color: #525A6B">{{p.year}}</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<sc-if value="{{p.hasUrl}}" hint-placeholder-val="{{ true }}"><a href="{{p.url}}" style="font-family: Spectral, Georgia, serif; font-size: 20px; line-height: 1.35; font-weight: 500; text-decoration: none">{{p.title}}</a></sc-if>
+<sc-if value="{{p.noUrl}}" hint-placeholder-val="{{ false }}"><span style="font-family: Spectral, Georgia, serif; font-size: 20px; line-height: 1.35; font-weight: 500">{{p.title}}</span></sc-if>
+<span style="font-size: 15px; color: #3B4256">{{p.authors}}</span>
+<span style="font-size: 15px; font-style: italic; color: #3B4256">{{p.venue}}</span>
+<sc-if value="{{p.hasApp}}" hint-placeholder-val="{{ false }}"><a href="{{p.app}}" style="font-size: 14px; font-weight: 600; text-decoration: none">Online appendix</a></sc-if>
+<sc-if value="{{p.hasCov}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #525A6B"><sc-for list="{{p.covLinks}}" as="c" hint-placeholder-count="3">{{c.sep}}<a href="{{c.u}}" style="color: #525A6B; text-decoration: underline; text-decoration-color: #B8BECB; text-underline-offset: 3px">{{c.n}}</a></sc-for></span></sc-if>
+</div>
+</article>
+</sc-for>
+</div>
+<sc-if value="{{current.hasPhoto}}" hint-placeholder-val="{{ false }}">
+<div style="padding-top: 56px">
+<sc-if value="{{current.isPol}}" hint-placeholder-val="{{ false }}">
+<figure style="margin: 0">
+<img src="img/dpep.jpg" alt="District Primary Education Programme logo showing two children running to school" style="width: 240px; height: 300px; object-fit: cover; display: block; border: 1px solid #D5D9E2; border-radius: 4px">
+</figure>
+</sc-if>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{hasPubs}}" hint-placeholder-val="{{ true }}">
+<section style="{{secStyle}}">
+<div style="display: flex; flex-direction: column; min-width: 0">
+<h2 style="margin: 0 0 8px; font-family: Spectral, Georgia, serif; font-size: 30px; font-weight: 500">Published and forthcoming</h2>
+<sc-for list="{{pubs}}" as="p" hint-placeholder-count="6">
+<article style="display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 28px; padding: 22px 0; border-top: 1px solid #D5D9E2">
+<span style="font-family: Spectral, Georgia, serif; font-size: 20px; color: #525A6B">{{p.year}}</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<sc-if value="{{p.hasUrl}}" hint-placeholder-val="{{ true }}"><a href="{{p.url}}" style="font-family: Spectral, Georgia, serif; font-size: 20px; line-height: 1.35; font-weight: 500; text-decoration: none">{{p.title}}</a></sc-if>
+<sc-if value="{{p.noUrl}}" hint-placeholder-val="{{ false }}"><span style="font-family: Spectral, Georgia, serif; font-size: 20px; line-height: 1.35; font-weight: 500">{{p.title}}</span></sc-if>
+<span style="font-size: 15px; color: #3B4256">{{p.authors}}</span>
+<span style="font-size: 15px; font-style: italic; color: #3B4256">{{p.venue}}</span>
+<sc-if value="{{p.hasApp}}" hint-placeholder-val="{{ false }}"><a href="{{p.app}}" style="font-size: 14px; font-weight: 600; text-decoration: none">Online appendix</a></sc-if>
+<sc-if value="{{p.hasCov}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #525A6B"><sc-for list="{{p.covLinks}}" as="c" hint-placeholder-count="3">{{c.sep}}<a href="{{c.u}}" style="color: #525A6B; text-decoration: underline; text-decoration-color: #B8BECB; text-underline-offset: 3px">{{c.n}}</a></sc-for></span></sc-if>
+</div>
+</article>
+</sc-for>
+</div>
+<sc-if value="{{current.hasPhoto}}" hint-placeholder-val="{{ false }}">
+<div style="padding-top: 56px">
+<sc-if value="{{current.isWork}}" hint-placeholder-val="{{ false }}">
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<img src="img/women-work.jpg" alt="Woman in a red veil and yellow dress carrying a load on her head outside a thatched house" style="width: 240px; height: 300px; object-fit: cover; border-radius: 4px; display: block">
+<figcaption style="font-size: 13px; color: #525A6B">Photo: World Bank</figcaption>
+</figure>
+</sc-if>
+<sc-if value="{{current.isPol}}" hint-placeholder-val="{{ false }}">
+<figure style="margin: 0">
+<img src="img/elevator.jpg" alt="Elevator with three signs reading VIP only" style="width: 240px; height: 300px; object-fit: cover; border-radius: 4px; display: block">
+</figure>
+</sc-if>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{hasBooks}}" hint-placeholder-val="{{ true }}">
+<section style="{{secStyle}}">
+<div style="display: flex; flex-direction: column; min-width: 0">
+<h2 style="margin: 0 0 8px; font-family: Spectral, Georgia, serif; font-size: 30px; font-weight: 500">Book chapters</h2>
+<sc-for list="{{books}}" as="p" hint-placeholder-count="3">
+<article style="display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 28px; padding: 22px 0; border-top: 1px solid #D5D9E2">
+<span style="font-family: Spectral, Georgia, serif; font-size: 20px; color: #525A6B">{{p.year}}</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<sc-if value="{{p.hasUrl}}" hint-placeholder-val="{{ true }}"><a href="{{p.url}}" style="font-family: Spectral, Georgia, serif; font-size: 20px; line-height: 1.35; font-weight: 500; text-decoration: none">{{p.title}}</a></sc-if>
+<sc-if value="{{p.noUrl}}" hint-placeholder-val="{{ false }}"><span style="font-family: Spectral, Georgia, serif; font-size: 20px; line-height: 1.35; font-weight: 500">{{p.title}}</span></sc-if>
+<span style="font-size: 15px; color: #3B4256">{{p.authors}}</span>
+<span style="font-size: 15px; font-style: italic; color: #3B4256">{{p.venue}}</span>
+<sc-if value="{{p.hasApp}}" hint-placeholder-val="{{ false }}"><a href="{{p.app}}" style="font-size: 14px; font-weight: 600; text-decoration: none">Online appendix</a></sc-if>
+<sc-if value="{{p.hasCov}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #525A6B"><sc-for list="{{p.covLinks}}" as="c" hint-placeholder-count="3">{{c.sep}}<a href="{{c.u}}" style="color: #525A6B; text-decoration: underline; text-decoration-color: #B8BECB; text-underline-offset: 3px">{{c.n}}</a></sc-for></span></sc-if>
+</div>
+</article>
+</sc-for>
+</div>
+<sc-if value="{{current.hasPhoto}}" hint-placeholder-val="{{ false }}">
+<div style="padding-top: 56px">
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{hasReps}}" hint-placeholder-val="{{ true }}">
+<section style="{{secStyle}}">
+<div style="display: flex; flex-direction: column; min-width: 0">
+<h2 style="margin: 0 0 8px; font-family: Spectral, Georgia, serif; font-size: 30px; font-weight: 500">World Bank reports</h2>
+<sc-for list="{{reps}}" as="p" hint-placeholder-count="3">
+<article style="{{p.artStyle}}">
+<span style="font-family: Spectral, Georgia, serif; font-size: 20px; color: #525A6B">{{p.year}}</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<sc-if value="{{p.hasUrl}}" hint-placeholder-val="{{ true }}"><a href="{{p.url}}" style="font-family: Spectral, Georgia, serif; font-size: 20px; line-height: 1.35; font-weight: 500; text-decoration: none">{{p.title}}</a></sc-if>
+<sc-if value="{{p.noUrl}}" hint-placeholder-val="{{ false }}"><span style="font-family: Spectral, Georgia, serif; font-size: 20px; line-height: 1.35; font-weight: 500">{{p.title}}</span></sc-if>
+<span style="font-size: 15px; color: #3B4256">{{p.authors}}</span>
+<span style="font-size: 15px; font-style: italic; color: #3B4256">{{p.venue}}</span>
+<sc-if value="{{p.hasApp}}" hint-placeholder-val="{{ false }}"><a href="{{p.app}}" style="font-size: 14px; font-weight: 600; text-decoration: none">Online appendix</a></sc-if>
+<sc-if value="{{p.hasCov}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #525A6B"><sc-for list="{{p.covLinks}}" as="c" hint-placeholder-count="3">{{c.sep}}<a href="{{c.u}}" style="color: #525A6B; text-decoration: underline; text-decoration-color: #B8BECB; text-underline-offset: 3px">{{c.n}}</a></sc-for></span></sc-if>
+</div>
+</article>
+</sc-for>
+</div>
+<sc-if value="{{current.hasPhoto}}" hint-placeholder-val="{{ false }}">
+<div style="padding-top: 56px">
+<sc-if value="{{current.isWork}}" hint-placeholder-val="{{ false }}">
+<a href="https://documents1.worldbank.org/curated/en/099000502222338765/pdf/P16815701c336d00e095dc093ef29af40a7.pdf" aria-label="Open the report Who Cares?" style="display: block"><img src="img/cover-whocares.jpg" alt="Cover of the report Who Cares? Care Work and Women's Labor Market Outcomes in Iraq, Jordan and Lebanon" style="width: 240px; height: 300px; object-fit: cover; display: block; border: 1px solid #D5D9E2; border-radius: 4px"></a>
+</sc-if>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{hasWip}}" hint-placeholder-val="{{ true }}">
+<section style="{{secStyle}}">
+<div style="display: flex; flex-direction: column; min-width: 0">
+<h2 style="margin: 0 0 8px; font-family: Spectral, Georgia, serif; font-size: 30px; font-weight: 500">Selected work in progress</h2>
+<sc-for list="{{wip}}" as="p" hint-placeholder-count="3">
+<article style="display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 28px; padding: 18px 0; border-top: 1px solid #D5D9E2">
+<span style="font-size: 14px; color: #525A6B"></span>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<sc-if value="{{p.hasUrl}}" hint-placeholder-val="{{ false }}"><a href="{{p.url}}" style="font-size: 17px; line-height: 1.4; font-weight: 600; text-decoration: none">{{p.title}}</a></sc-if>
+<sc-if value="{{p.noUrl}}" hint-placeholder-val="{{ true }}"><span style="font-size: 17px; line-height: 1.4; font-weight: 600">{{p.title}}</span></sc-if>
+<span style="font-size: 15px; color: #3B4256">{{p.authors}}{{p.venueSep}}{{p.venue}}</span>
+<sc-if value="{{p.hasCov}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; color: #525A6B"><sc-for list="{{p.covLinks}}" as="c" hint-placeholder-count="3">{{c.sep}}<a href="{{c.u}}" style="color: #525A6B; text-decoration: underline; text-decoration-color: #B8BECB; text-underline-offset: 3px">{{c.n}}</a></sc-for></span></sc-if>
+</div>
+</article>
+</sc-for>
+</div>
+<sc-if value="{{current.hasPhoto}}" hint-placeholder-val="{{ false }}">
+<div style="padding-top: 56px">
+</div>
+</sc-if>
+</section>
+</sc-if>
+</div>
+
+</main>
+</div>
+</template>
+<noscript><p style="padding:24px">This page needs JavaScript to show the publication list. See the <a href="cv.pdf">CV</a> for a full list.</p></noscript>
+<script>
+class DCLogic { constructor(){ this.state = {}; this.props = {}; } setState(o){ Object.assign(this.state, o); render(); } }
+
+class Component extends DCLogic {
+  renderVals() {
+    var themes = [
+      { id: "all", label: "All Research" },
+      { id: "fam", label: "Families, Marriage & Social Norms",
+        short: "How extended families, mothers-in-law, marriage markets, and dowry shape women's lives.",
+        long: "Many decisions that shape a woman's life in South Asia are made inside the household, and often by more than a husband and wife. This work studies extended-family households, especially the influence of mothers-in-law, along with marriage markets and dowry, and asks how these arrangements affect women's mobility, social networks, health, and wellbeing." },
+      { id: "fert", label: "Fertility, Reproductive Health & Son Preference",
+        short: "Son preference, the trade-off between lower fertility and balanced sex ratios, and women's reproductive agency.",
+        long: "Where parents prefer sons and sex selection is easy, policies that lower fertility can worsen sex ratios. These papers examine that trade-off, how financial incentives and women's income shape fertility and investments in daughters, and how women can gain a greater say over their own reproductive decisions." },
+      { id: "work", label: "Women, Work & Economic Opportunity",
+        short: "Care, social norms, and job search as constraints on women's paid work, and what loosens them.",
+        long: "Across South Asia and the Middle East, many women remain outside paid work. This research looks at the constraints behind that gap, including care responsibilities and childcare laws, social norms, skills, and job search, and tests interventions designed to loosen them." },
+      { id: "pol", label: "Political Economy & Institutions",
+        short: "How women in office, and rules for politicians, change outcomes for women and families.",
+        long: "Who holds power shapes whose needs policy serves. These papers study how electing women affects female constituents and life inside their households, the wider effects of fertility limits imposed on local politicians, and how effective policy implementation shapes who enters politics." },
+      { id: "tech", label: "AI & Digital Technology",
+        short: "Digital job platforms, job search, and what AI means for developing economies.",
+        long: "Digital tools are changing how women look for work and how jobs are organized. This work evaluates digital job platforms and job search support for women and, through the World Development Report 2026, examines what artificial intelligence means for developing economies." }
+    ];
+    var labelOf = {};
+    themes.forEach(function (t) { labelOf[t.id] = t.label; });
+
+    var items = [
+      { s: "pub", th: "fam", year: "2026", title: "Son Preference, Intergenerational Household Dynamics, and Women's Mental Health in India", authors: "With Catalina Herrera-Almanza, Shahadat Hossain, and Mahesh Karra", venue: "Journal of Development Economics, 183, September 2026", url: "https://www.sciencedirect.com/science/article/pii/S0304387826001501" },
+      { s: "pub", th: "pol", year: "2026", title: "Female Leaders and Intrahousehold Dynamics: Evidence from State Elections in India", authors: "With Bilge Erten and Priya Mukherjee", venue: "American Economic Journal: Economic Policy, 18(3), August 2026", url: "https://www.aeaweb.org/articles?id=10.1257/pol.20240369" },
+      { s: "pub", th: "fert", year: "2026", title: "Bring a Friend: Leveraging Financial and Peer Support to Improve Women's Reproductive Agency in India", authors: "With Catalina Herrera-Almanza and Mahesh Karra", venue: "Journal of Development Economics, 180, March 2026", app: "https://ars.els-cdn.com/content/image/1-s2.0-S0304387825002573-mmc1.pdf", url: "https://www.sciencedirect.com/science/article/pii/S0304387825002573", covLinks: [{"n": "World Bank Feature Story", "u": "https://www.worldbank.org/en/news/feature/2021/10/27/better-together-empowering-women-through-stronger-social-networks"}] },
+      { s: "pub", th: "fert", year: "2025", title: "Contraceptive Concordance", authors: "With Catalina Herrera-Almanza, Mahesh Karra, and Sarah Vincent", venue: "Studies in Family Planning, 56(3), September 2025. Special issue: Rethinking Family Planning Measurement with a Rights, Justice, and Person-Centered Lens", url: "http://doi.org/10.1111/sifp.70018" },
+      { s: "pub", th: "work", year: "2025", title: "Filling the Gaps: Childcare Laws for Women's Economic Empowerment", authors: "With Lelys Dinarte-Diaz, Maria Montoya-Aguirre, and Alena Sakhonchik", venue: "AEA Papers and Proceedings, May 2025", url: "https://pubs.aeaweb.org/doi/pdfplus/10.1257/pandp.20251131", covLinks: [{"n": "The Economist", "u": "https://www.economist.com/interactive/graphic-detail/2024/01/30/how-motherhood-hurts-careers"}] },
+      { s: "pub", th: "work", year: "2024", title: "The Influence of COVID-19 on Young Women's Labor Market Aspirations and Expectations in India", authors: "With Catalina Herrera-Almanza and Sophie Ochmann", venue: "AEA Papers and Proceedings, 114: 243-47, May 2024", url: "https://pubs.aeaweb.org/doi/pdfplus/10.1257/pandp.20241119", covLinks: [{"n": "Business Standard", "u": "https://www.business-standard.com/economy/news/pandemic-exposure-lowered-wage-aspirations-of-rural-women-world-bank-124062300412_1.html"}, {"n": "Devdiscourse", "u": "https://www.devdiscourse.com/article/headlines/2988128-covid-19s-impact-on-young-womens-job-aspirations-a-wake-up-call-for-rural-india"}] },
+      { s: "pub", th: "fam", year: "2022", title: "Convincing the Mummy-ji: Improving Mother-in-Law Approval of Family Planning in India", authors: "With Catalina Herrera-Almanza, Mahesh Karra, and Rocio Valdebenito", venue: "AEA Papers and Proceedings, May 2022", app: "https://www.aeaweb.org/content/file?id=16782", url: "https://www.dropbox.com/s/16qpjnav28mm6bm/aerp_p.20221122.pdf?dl=0" },
+      { s: "pub", th: "fam", year: "2022", title: "Saving for Dowry: Evidence from Rural India", authors: "With Sungoh Kwon and Nishith Prakash", venue: "Journal of Development Economics, 154, January 2022", app: "https://www.dropbox.com/s/7bna05kd010ktvs/online_appendix.pdf?dl=0", url: "https://www.sciencedirect.com/science/article/abs/pii/S0304387821001176", covLinks: [{"n": "BBC", "u": "https://www.bbc.com/news/world-asia-india-57677253"}, {"n": "Times of India", "u": "https://timesofindia.indiatimes.com/business/india-business/christians-and-sikhs-show-increase-in-dowry-payments-in-rural-india-world-bank-blog/articleshow/84062515.cms"}, {"n": "CNN", "u": "https://www.cnn.com/2021/07/31/india/india-kerala-dowry-deaths-intl-hnk-dst/index.html"}, {"n": "HuffPost", "u": "https://www.huffpost.com/entry/achieving-gender-equality_b_12871168"}, {"n": "The Conversation", "u": "https://theconversation.com/achieving-gender-equality-in-india-what-works-and-what-doesnt-67189"}, {"n": "The Print", "u": "https://theprint.in/economy/sikhs-christians-see-biggest-rise-in-dowry-payment-kerala-is-the-worst-state-study-says/688260/"}] },
+      { s: "pub", th: "fert", year: "2022", title: "On the Quantity and Quality of Girls: Fertility, Parental Investments, and Mortality", authors: "With Sonia Bhalotra and Eddy H. F. Tam", venue: "The Economic Journal, 132(641), January 2022", app: "https://www.dropbox.com/s/r7lvl14ypfw0ntl/MS20190754_online_appendix.pdf?dl=0", url: "https://academic.oup.com/ej/article/132/641/1/6256862" },
+      { s: "pub", th: "fam", year: "2020", title: "Curse of the Mummy-ji: The Influence of Mothers-in-Law on Women in India", authors: "With Catalina Herrera-Almanza, Mahesh Karra, and Praveen Pathak", venue: "American Journal of Agricultural Economics, 102(5), September 2020", url: "https://www.dropbox.com/s/1de4h9a5koz24d9/ajae.12114.pdf?dl=0", covLinks: [{"n": "The Economist", "u": "https://www.economist.com/international/2023/01/12/the-age-of-the-grandparent-has-arrived"}, {"n": "BBC", "u": "https://www.bbc.com/news/world-asia-india-50772811"}, {"n": "LiveMint", "u": "https://www.livemint.com/news/india/how-mothers-in-law-hurt-women-s-well-being-11575357692691.html"}, {"n": "CNN News18", "u": "https://www.news18.com/news/india/saas-bahu-and-social-networks-how-a-mother-in-law-influences-a-rural-indian-womans-personal-and-family-well-being-2413439.html"}, {"n": "The Print", "u": "https://theprint.in/opinion/indian-women-cant-go-out-and-socialise-because-of-their-mothers-in-law-study/331739/"}, {"n": "IndiaSpend", "u": "https://www.indiaspend.com/taking-mummyji-along-key-to-effective-family-planning-up-data-suggests/"}, {"n": "Scroll.in", "u": "https://scroll.in/article/946891/in-uttar-pradesh-living-with-mummyji-can-restrict-a-womans-access-to-family-planning"}, {"n": "Phys.org", "u": "https://phys.org/news/2020-01-rural-india-highlights-role-mother-in-law.html"}, {"n": "World Bank Feature Story", "u": "https://www.worldbank.org/en/news/feature/2021/10/27/better-together-empowering-women-through-stronger-social-networks"}] },
+      { s: "pub", th: "fert", year: "2019", title: "Women's Worth: Trade, Female Income, and Fertility in India", authors: "With Todd J. Kumler", venue: "Economic Development and Cultural Change, 67(3), April 2019", url: "https://www.dropbox.com/s/vh1simu3h2tr4os/Trade.pdf?dl=0" },
+      { s: "pub", th: "pol", year: "2019", title: "Democracy and Demography: Societal Effects of Fertility Limits on Local Leaders", authors: "With Abhishek Chakravarty", venue: "Journal of Human Resources, 54(1), Winter 2019", url: "http://jhr.uwpress.org/content/early/2017/09/01/jhr.54.1.1016.8308R2.abstract", covLinks: [{"n": "The Telegraph", "u": "https://www.telegraphindia.com/india/population-policy-pitfalls-for-girl-child/cid/1716621"}, {"n": "Scroll.in", "u": "https://scroll.in/article/936158/modi-warned-about-a-population-explosion-but-demographic-data-show-declining-trend"}, {"n": "LiveMint", "u": "https://www.livemint.com/news/india/population-control-and-beti-bachao-can-t-co-exist-1566373174162.html"}, {"n": "Ideas for India", "u": "http://www.ideasforindia.in/article.aspx?article_id=416"}, {"n": "The Hindu", "u": "http://www.thehindu.com/news/national/twochild-norm-for-local-bodies-hurts-sex-ratio/article6388785.ece"}, {"n": "DailyO", "u": "http://www.dailyo.in/politics/assam-two-child-policy-bjp-polarising-hindus-muslims/story/1/17485.html"}, {"n": "The Wire", "u": "https://thewire.in/rights/rising-female-foeticide-targeted-harassment-ups-population-control-bill-may-be-dangerous"}, {"n": "Cato Institute", "u": "https://www.cato.org/policy-analysis/neo-malthusianism-coercive-population-control-china-india-overpopulation-concerns"}] },
+      { s: "pub", th: "fert", year: "2018", title: "Financial Incentives and the Fertility-Sex Ratio Trade-off", authors: "", venue: "American Economic Journal: Applied Economics, 10(2), April 2018", app: "https://www.aeaweb.org/content/file?id=6628", url: "https://www.dropbox.com/s/2vjp1h397lsvokf/Devirupak.pdf?dl=0", covLinks: [{"n": "LiveMint", "u": "https://www.livemint.com/news/india/population-control-and-beti-bachao-can-t-co-exist-1566373174162.html"}, {"n": "Hindu Business Line", "u": "https://www.thehindubusinessline.com/opinion/columns/in-search-of-indias-missing-women/article24246965.ece"}, {"n": "Ideas for India", "u": "http://ideasforindia.in/article.aspx?article_id=393"}, {"n": "Harvard Magazine", "u": "http://harvardmagazine.com/2015/01/keeping-women-safe"}, {"n": "IndiaSpend", "u": "https://www.indiaspend.com/gendercheck/how-policies-to-reduce-gender-discrimination-can-have-the-opposite-effect-732250"}, {"n": "The Decision Lab", "u": "https://thedecisionlab.com/insights/development/why-does-gender-bias-persist"}] },
+
+      { s: "wp", th: "pol", year: "2026", title: "Can Effective Policy Implementation Alter Political Selection? Evidence from Female Legislators in India", authors: "With Rossella Calvi and Abhishek Chakravarty", venue: "World Bank Policy Research Working Paper No. 10654; IZA Discussion Paper No. 16639", url: "https://www.dropbox.com/scl/fi/8tkxktlab8x13lu4bbl1z/Manuscript.pdf?rlkey=f7dpzx9r8gwsi2c4p1fofxf5f&dl=0" },
+      { s: "wp", th: ["work", "tech"], year: "2026", title: "Digital Job Search and the School-to-Work Transition: Evidence from a Field Experiment in India", authors: "With Catalina Herrera-Almanza and Sophie Ochmann", venue: "", url: "", covLinks: [{"n": "Center for Global Development", "u": "https://www.cgdev.org/blog/beyond-backlash-gender-equality-lessons-cgds-10th-birdsall-house-conference"}] },
+      { s: "wp", th: ["work", "tech"], year: "2024", title: "Evaluating the Impacts of Training and Access to Digital Platforms on Female Domestic Workers in Bangladesh", authors: "With Maurizio Bussolo, Jean Lee, Siddharth Sharma, and Anaise Williams", venue: "Journal of Development Economics, conditionally accepted via pre-results review", url: "https://afosterri.org/jdepreresults/wp-content/uploads/2024/01/anukriti-bussolo-lee-sharma-williams-digital-jobs-platform-DEVEC-4fddcfd0d16bd1120a07b84c233876ca.pdf" },
+
+      { s: "wip", th: "work", title: "Keeping Girls in School: Evaluating the Case Management System in Zambia", authors: "With Aanchal Bagga and Kathleen Beegle", venue: "Endline complete", url: "" },
+      { s: "wip", th: "fert", title: "The Measurement and Evolution of Son Preference in India", authors: "With Sakshi Gupta, Nistha Sinha, and Yongkun Yin", venue: "", url: "" },
+      { s: "wip", th: "work", title: "Social Networks and Women's Economic Empowerment", authors: "With Thomas Gautier, Eeshani Kandpal, and Juni Singh", venue: "", url: "" },
+      { s: "wip", th: "fam", title: "Revisiting the Curse of the Mummy-ji: Mothers-in-Law and Women's Welfare", authors: "With Catalina Herrera-Almanza and Mahesh Karra", venue: "Baseline complete", url: "" },
+      { s: "wip", th: "fert", title: "Female Sterilization and Women's Well-being in India", authors: "", venue: "", url: "https://www.dropbox.com/s/nfoktk7133co3s8/Anukriti_LSE_ID.pdf?dl=0" },
+      { s: "wip", th: ["fam", "fert"], title: "Sex Ratios, Schooling, and the Marriage Market", authors: "", venue: "", url: "https://www.dropbox.com/s/wcita2fl1wcfzy5/marriage_sr_apr2013.pdf?dl=0", covLinks: [{"n": "Ideas for India", "u": "http://ideasforindia.in/article.aspx?article_id=393"}, {"n": "Harvard Magazine", "u": "http://harvardmagazine.com/2015/01/keeping-women-safe"}] },
+
+      { s: "rep", th: "tech", year: "2026", title: "World Development Report 2026: The Promise of Artificial Intelligence", authors: "Member of the core team", venue: "World Development Report, The World Bank, 2026", url: "https://www.worldbank.org/en/publication/wdr2026" },
+      { s: "book", th: "fert", year: "2026", title: "Son Preference and Missing Women", authors: "With Rossella Calvi", venue: "Draft, June 2026. In preparation for the Oxford Handbook on the Economics of Fertility and Reproductive Health (forthcoming)", url: "https://www.dropbox.com/scl/fi/2ab2jbpwfncy6s1r9czp1/Oxford_Chapter___Missing_Women_June2026.pdf?rlkey=gta72lvrexdo2kzn06fcd7rl8&dl=0" },
+      { s: "rep", cover: "/_blob/f407c2f3ef5c77e05f26f8ab12aed2ee", coverAlt: "Cover of the report Who Cares? Care Work and Women's Labor Market Outcomes in Iraq, Jordan and Lebanon", th: "work", year: "2023", title: "Who Cares? Care Work and Women's Labor Market Outcomes in Iraq, Jordan, and Lebanon", authors: "With Silvia Redaelli, Paola Sandra Buitrago Hernandez, and Tala Ismail", venue: "The 2nd State of the Mashreq Women Flagship Report, World Bank, March 2023", url: "https://documents1.worldbank.org/curated/en/099000502222338765/pdf/P16815701c336d00e095dc093ef29af40a7.pdf" },
+      { s: "rep", th: ["work", "fam"], year: "2022", title: "Reshaping Social Norms about Gender: A New Way Forward", authors: "With Maurizio Bussolo and Ana Maria Munoz Boudet", venue: "South Asia Economic Focus, The World Bank, April 2022", url: "https://openknowledge.worldbank.org/bitstream/handle/10986/37121/9781464818578-CH3.pdf?sequence=6&isAllowed=y", covLinks: [{"n": "The Hindu", "u": "https://www.thehindu.com/data/data-despite-development-social-norms-stop-women-from-entering-the-labour-force-in-south-asia/article65381272.ece"}, {"n": "The Print", "u": "https://theprint.in/economy/does-development-mean-more-women-in-work-yes-in-pakistan-but-not-india-says-world-bank-study/1027868/"}] },
+      { s: "book", th: "fam", year: "2018", title: "Marriage Markets in Developing Countries", authors: "With Shatanjaya Dasgupta", venue: "Oxford Handbook of Women and the Economy, Oxford University Press, July 2018", url: "https://www.dropbox.com/s/q2kphxfrt9z9zcj/handbook_marriage.pdf?dl=0" },
+      { s: "book", th: "fert", year: "2015", title: "Economic Incentives and the Fertility-Sex Ratio Trade-off", authors: "", venue: "Policy Challenges from Demographic Change in China and India, Brookings Institution Press, July 2015", url: "https://www.dropbox.com/s/2dgux0dyf886adb/Book_Chapter_Stanford.pdf?dl=0" }
+    ];
+
+    var t = (this.state && this.state.theme) || "all";
+    var self = this;
+    var base = "display: inline-flex; align-items: baseline; gap: 6px; min-height: 40px; box-sizing: border-box; padding: 9px 2px 7px; margin-bottom: -1px; background: transparent; border: none; font-family: inherit; font-size: 16px; cursor: pointer; ";
+    var on = base + "border-bottom: 2px solid #2C3E8C; color: #2C3E8C; font-weight: 600";
+    var off = base + "border-bottom: 2px solid transparent; color: #4A5163; font-weight: 400";
+
+    var chips = themes.map(function (th) {
+      var n = th.id === "all" ? items.length : items.filter(function (i) { return [].concat(i.th).indexOf(th.id) >= 0; }).length;
+      return {
+        label: th.label,
+        count: String(n),
+        pressed: th.id === t ? "true" : "false",
+        style: th.id === t ? on : off,
+        pick: function () { self.setState({ theme: th.id }); }
+      };
+    });
+
+    function pick(status) {
+      var prevYear = null;
+      return items
+        .filter(function (i) { return i.s === status && (t === "all" || [].concat(i.th).indexOf(t) >= 0); })
+        .map(function (i) {
+          var y = i.year || "";
+          var showYear = y && y !== prevYear ? y : "";
+          prevYear = y;
+          return {
+            year: showYear,
+            title: i.title,
+            authors: i.authors,
+            venue: i.venue,
+            venueSep: i.venue ? ". " : "",
+            url: i.url,
+            hasUrl: !!i.url,
+            noUrl: !i.url,
+            app: i.app || "",
+            hasApp: !!i.app,
+            covLinks: (i.covLinks || []).map(function (c, n) { return { n: c.n, u: c.u, sep: n === 0 ? "" : " | " }; }),
+            hasCov: !!(i.covLinks && i.covLinks.length),
+            cover: i.cover || "",
+            coverAlt: i.coverAlt || "",
+            hasCover: !!i.cover && t === "work",
+            artStyle: "display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 28px; padding: 22px 0; border-top: 1px solid #D5D9E2; align-items: start",
+            themeLabel: ""
+          };
+        });
+    }
+
+    var pubs = pick("pub"), wps = pick("wp"), books = pick("book"), reps = pick("rep"), wip = pick("wip"), hia = pick("hia");
+    var cur = themes.filter(function (th) { return th.id === t; })[0] || themes[0];
+    var cards = themes.filter(function (th) { return th.id !== "all"; }).map(function (th) {
+      var n = items.filter(function (i) { return [].concat(i.th).indexOf(th.id) >= 0; }).length;
+      return { label: th.label, short: th.short, countText: "See " + n + " papers and projects", pick: function () { self.setState({ theme: th.id }); } };
+    });
+    return {
+      isAll: t === "all", notAll: t !== "all",
+      current: { label: cur.label, long: cur.long || "", countText: (pubs.length + wps.length + books.length + reps.length + wip.length + hia.length) + " papers and projects.", isPol: cur.id === "pol", isWork: cur.id === "work", hasPhoto: cur.id === "pol" || cur.id === "work" },
+      cards: cards,
+      secStyle: (cur.id === "pol" || cur.id === "work") ? "display: grid; grid-template-columns: minmax(0, 1fr) 240px; column-gap: 56px; align-items: start" : "display: flex; flex-direction: column",
+      showAll: function () { self.setState({ theme: "all" }); },
+      chips: chips,
+      pubs: pubs, wps: wps, books: books, reps: reps, wip: wip, hia: hia,
+      hasPubs: pubs.length > 0, hasWps: wps.length > 0, hasBooks: books.length > 0, hasReps: reps.length > 0, hasWip: wip.length > 0, hasHia: hia.length > 0
+    };
+  }
+}
+
+(function(){})();
+var comp = new Component();
+function get(expr, scope){ expr = expr.trim(); if (expr === 'true') return true; if (expr === 'false') return false;
+  var parts = expr.split('.'), v = scope[parts[0]]; for (var i = 1; i < parts.length; i++){ if (v == null) return undefined; v = v[parts[i]]; } return v; }
+function interp(s, scope){ return s.replace(/\{\{([^}]+)\}\}/g, function(m, e){ var v = get(e, scope); return v == null ? '' : String(v); }); }
+function build(node, scope, parent){
+  if (node.nodeType === 3){ parent.appendChild(document.createTextNode(interp(node.nodeValue, scope))); return; }
+  if (node.nodeType !== 1) return;
+  var tag = node.tagName.toLowerCase();
+  if (tag === 'sc-for'){ var list = get(node.getAttribute('list').match(/\{\{([^}]+)\}\}/)[1], scope) || [], as = node.getAttribute('as');
+    list.forEach(function(item){ var s = Object.create(scope); s[as] = item; node.childNodes.forEach(function(c){ build(c, s, parent); }); }); return; }
+  if (tag === 'sc-if'){ if (get(node.getAttribute('value').match(/\{\{([^}]+)\}\}/)[1], scope)) node.childNodes.forEach(function(c){ build(c, scope, parent); }); return; }
+  var el = node.namespaceURI === 'http://www.w3.org/2000/svg' ? document.createElementNS(node.namespaceURI, tag) : document.createElement(tag);
+  Array.prototype.forEach.call(node.attributes, function(a){
+    if (a.name.indexOf('hint-') === 0) return;
+    var whole = a.value.match(/^\{\{([^}]+)\}\}$/);
+    if (a.name.indexOf('on') === 0 && whole){ var fn = get(whole[1], scope); if (typeof fn === 'function') el.addEventListener(a.name.slice(2).toLowerCase(), fn); return; }
+    el.setAttribute(a.name, interp(a.value, scope));
+  });
+  node.childNodes.forEach(function(c){ build(c, scope, el); });
+  parent.appendChild(el);
+}
+var app = document.getElementById('app'), tpl = document.getElementById('tpl');
+function render(){
+  var active = document.activeElement, key = active && active.tagName === 'BUTTON' ? active.textContent : null;
+  var vals = comp.renderVals(), scope = Object.create(null); Object.keys(vals).forEach(function(k){ scope[k] = vals[k]; });
+  var frag = document.createDocumentFragment(); tpl.content.childNodes.forEach(function(c){ build(c, scope, frag); });
+  app.replaceChildren(frag);
+  if (key){ var bs = app.querySelectorAll('[role=group] button'); for (var i = 0; i < bs.length; i++){ if (bs[i].textContent === key){ bs[i].focus(); break; } } }
+}
+render();
+</script>
+</body>
+</html>
